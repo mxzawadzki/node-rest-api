@@ -6,17 +6,21 @@ require('dotenv/config');
 
 // Middlewares
 // execute functions when hitting routes
-app.use('/posts', () => {
-  console.log('Middleware on posts');
-});
+// app.use('/posts', () => {
+//   console.log('Middleware on posts');
+// });
+
+// Use body parser built into express
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
+// Import routes and use middleware
+const postsRoute = require('./routes/posts');
+app.use('/posts', postsRoute)
 
 // Routes
 app.get('/', (req, res) => {
   res.send('Home');
-});
-
-app.get('/posts', (req, res) => {
-  res.send('Posts');
 });
 
 // Connect to db
