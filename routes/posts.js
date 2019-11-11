@@ -3,31 +3,49 @@ const express = require('express'),
       // Import post model
       Post = require('../models/Post');
 
-router.get('/', (req, res) => {
-  res.send('Posts');
+// Get all posts
+router.get('/', async (req, res) => {
+  try {
+    const posts = await Post.find();
+    res.json(posts);
+  } catch(err) {
+    res.json({
+      message: err
+    });
+  }
 });
 
-router.get('/first', (req, res) => {
-  res.send('First post');
-});
+// router.get('/first', (req, res) => {
+//   res.send('First post');
+// });
 
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
   const post = new Post({
     title: req.body.title,
     description: req.body.description
   });
 
   // Save to database
-  post.save()
-      .then(data => {
-        // Respond with json data received
-        res.json(data);
-      })
-      .catch(err => {
-        res.json({
-          message: err
-        });
-      });
+  try {
+    const savedPost = await post.save();
+    // Respond with json data received
+    res.json(savedPost);
+  } catch(err) {
+    res.json({
+      message: err
+    });
+  }
+
+  // post.save()
+  //     .then(data => {
+  //       // Respond with json data received
+  //       res.json(data);
+  //     })
+  //     .catch(err => {
+  //       res.json({
+  //         message: err
+  //       });
+  //     });
 });
 
 module.exports = router;
