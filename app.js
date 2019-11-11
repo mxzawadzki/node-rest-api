@@ -1,6 +1,7 @@
 const express = require('express'),
       app = express(),
-      mongoose = require('mongoose');
+      mongoose = require('mongoose'),
+      cors = require('cors');
 
 require('dotenv/config');
 
@@ -9,6 +10,9 @@ require('dotenv/config');
 // app.use('/posts', () => {
 //   console.log('Middleware on posts');
 // });
+
+// Cors
+app.use(cors())
 
 // Use body parser built into express
 app.use(express.urlencoded({ extended: true }));
